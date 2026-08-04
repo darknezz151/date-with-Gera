@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Особое приглашение ✨</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Comfortaa', cursive;
+        }
+
+        /* Animated Floating Background Hearts */
+        .heart-bg {
+            position: fixed;
+            top: -10vh;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            animation: fall linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Step Card Transition */
+        .step-panel {
+            display: none;
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .step-panel.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Option Selection Card Styling */
+        .option-card {
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .option-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.2);
+        }
+
+        .option-card.selected {
+            border-color: #ec4899;
+            background-color: #fdf2f8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(236, 72, 153, 0.25);
+        }
+
+        /* Runaway No Button Effect */
+        #noBtn {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 md:p-6 relative">
+
+    <!-- Floating Background Particles -->
+    <div id="heartContainer"></div>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-xl z-10 relative my-auto">
+
+        <!-- ================= STEP 1: Main Question ================= -->
+        <section id="step1" class="step-panel active glass-card rounded-3xl p-6 md:p-10 flex-col items-center text-center">
+            <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mb-6 text-pink-500 text-3xl shadow-inner animate-bounce">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 leading-relaxed">
+                Ты пойдешь со мной на свидание 9-го числа? ✨
+            </h1>
+            <p class="text-gray-600 text-sm md:text-base mb-8">
+                Я приготовил кое-что очень интересное для нас!
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 w-full justify-center items-center relative min-h-[120px]" id="buttonArea">
+                <button onclick="goToStep(2)" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-pink-300/50 hover:scale-105 active:scale-95 transition-all duration-200">
+                    Да, с радостью! ❤️
+                </button>
+                <button id="noBtn" onmouseenter="runawayNo()" onclick="handleNoClick()" class="w-full sm:w-auto px-8 py-3.5 bg-gray-200 text-gray-700 font-bold text-lg rounded-2xl shadow hover:bg-gray-300 transition-all duration-200">
+                    Нет 😢
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= STEP "NO": Crying Cat ================= -->
+        <section id="stepNo" class="step-panel glass-card rounded-3xl p-6 md:p-10 flex-col items-center text-center">
+            <div class="w-full max-w-xs rounded-2xl overflow-hidden shadow-md mb-6 bg-gray-100">
+                <img src="step2.png" alt="Плачущий котик" class="w-full h-56 object-cover">
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">
+                Ну как же так? 😿
+            </h2>
+            <p class="text-gray-600 mb-6 text-sm md:text-base">
+                Котик очень расстроился... Может быть, всё-таки передумаешь? 🥺
+            </p>
+            <button onclick="goToStep(2)" class="px-8 py-3.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-lg rounded-2xl shadow-lg hover:scale-105 transition-all">
+                Ладно, я передумала! ❤️
+            </button>
+        </section>
+
+        <!-- ================= STEP 2: Movie Session ================= -->
+        <section id="step2" class="step-panel glass-card rounded-3xl p-6 md:p-8 flex-col items-center text-center">
+            <div class="w-full h-40 rounded-2xl overflow-hidden mb-6 relative shadow-md">
+                <img src="step1.png" alt="Человек-паук" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-4">
+                    <span class="text-white text-xs font-semibold px-2.5 py-1 bg-red-600 rounded-full">Кинопремьера</span>
+                </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                Ура! Выбираем сеанс 🕷️
+            </h2>
+            <p class="text-gray-600 text-sm mb-6">
+                Смотрим фильм <strong class="text-red-500">«Человек-Паук»</strong>! Какой сеанс 9-го числа тебе удобнее?
+            </p>
+
+            <div id="sessionList" class="grid grid-cols-2 gap-3 w-full mb-6">
+                <!-- Session items rendered by JS -->
+            </div>
+
+            <div class="w-full mb-6 text-left">
+                <button onclick="toggleAddSessionForm()" class="text-xs text-pink-600 font-bold hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-plus-circle"></i> Добавить свой вариант сеанса
+                </button>
+                <div id="addSessionForm" class="hidden mt-3 p-3 bg-pink-50 rounded-xl flex gap-2">
+                    <input type="time" id="customTimeInput" class="px-3 py-1.5 border border-pink-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pink-400 flex-1">
+                    <button onclick="addCustomSession()" class="px-4 py-1.5 bg-pink-500 text-white text-xs font-bold rounded-lg hover:bg-pink-600">Добавить</button>
+                </div>
+            </div>
+
+            <div class="flex gap-3 w-full">
+                <button onclick="goToStep(1)" class="w-1/3 py-3 border border-gray-300 text-gray-600 font-bold text-sm rounded-xl hover:bg-gray-100">
+                    Назад
+                </button>
+                <button onclick="submitStep2()" class="w-2/3 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-sm rounded-xl shadow hover:opacity-95">
+                    Далее <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= STEP 3: Food Selection ================= -->
+        <section id="step3" class="step-panel glass-card rounded-3xl p-6 md:p-8 flex-col items-center text-center">
+            <div class="w-full h-32 rounded-2xl overflow-hidden mb-5 relative shadow-md">
+                <img src="step3.png" alt="Вкусная еда" class="w-full h-full object-cover">
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                Где или что покушаем? 🍕🍰
+            </h2>
+            <p class="text-gray-600 text-sm mb-6">
+                Выбери вкусное место или направление для ужина:
+            </p>
+
+            <div id="foodList" class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mb-6">
+                <!-- Food options rendered by JS -->
+            </div>
+
+            <div class="flex gap-3 w-full">
+                <button onclick="goToStep(2)" class="w-1/3 py-3 border border-gray-300 text-gray-600 font-bold text-sm rounded-xl hover:bg-gray-100">
+                    Назад
+                </button>
+                <button onclick="submitStep3()" class="w-2/3 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-sm rounded-xl shadow hover:opacity-95">
+                    Далее <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= STEP 4: Walk Location ================= -->
+        <section id="step4" class="step-panel glass-card rounded-3xl p-6 md:p-8 flex-col items-center text-center">
+            <div class="w-full h-32 rounded-2xl overflow-hidden mb-5 relative shadow-md">
+                <img src="step4.png" alt="Прогулка" class="w-full h-full object-cover">
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                Где прогуляемся? 🌙✨
+            </h2>
+            <p class="text-gray-600 text-sm mb-6">
+                Куда отправимся подышать воздухом и поболтать?
+            </p>
+
+            <div id="walkList" class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mb-6">
+                <!-- Walk options rendered by JS -->
+            </div>
+
+            <div class="flex gap-3 w-full">
+                <button onclick="goToStep(3)" class="w-1/3 py-3 border border-gray-300 text-gray-600 font-bold text-sm rounded-xl hover:bg-gray-100">
+                    Назад
+                </button>
+                <button onclick="submitStep4()" class="w-2/3 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-sm rounded-xl shadow hover:opacity-95">
+                    Посмотреть план! <i class="fa-solid fa-heart ml-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= STEP 5: Final Summary ================= -->
+        <section id="step5" class="step-panel glass-card rounded-3xl p-6 md:p-8 flex-col items-center text-center">
+            <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center text-3xl mb-4 shadow">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                Идеальный план готов! 🎉
+            </h2>
+
+            <div class="w-full bg-gradient-to-r from-rose-500 to-pink-500 text-white p-4 rounded-2xl shadow-md my-4">
+                <p class="text-xs uppercase tracking-wider font-semibold opacity-90 mb-1">Время встречи</p>
+                <h3 id="pickupTimeText" class="text-xl md:text-2xl font-bold">
+                    Заеду за тобой в 17:00! 🚗
+                </h3>
+            </div>
+
+            <div class="w-full bg-white/80 rounded-2xl p-4 text-left border border-pink-100 mb-6 space-y-3 text-sm">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-pink-100 text-pink-500 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-calendar-day"></i></span>
+                    <div>
+                        <p class="text-gray-400 text-xs">Дата</p>
+                        <p class="font-bold text-gray-800">9-е число</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-red-100 text-red-500 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-film"></i></span>
+                    <div>
+                        <p class="text-gray-400 text-xs">Фильм & Сеанс</p>
+                        <p id="summaryMovie" class="font-bold text-gray-800">Человек-Паук в 18:00</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-500 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-utensils"></i></span>
+                    <div>
+                        <p class="text-gray-400 text-xs">Покушать</p>
+                        <p id="summaryFood" class="font-bold text-gray-800">Уютная пиццерия</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-500 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-tree"></i></span>
+                    <div>
+                        <p class="text-gray-400 text-xs">Прогулка</p>
+                        <p id="summaryWalk" class="font-bold text-gray-800">Вечерний парк</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Telegram Direct Redirect Button -->
+            <button onclick="sendToTelegram()" class="w-full py-4 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-2xl shadow-lg flex items-center justify-center gap-2 text-base transition-all hover:scale-[1.02] active:scale-95">
+                <i class="fa-brands fa-telegram text-2xl"></i> Подтвердить и отправить
+            </button>
+            
+            <button onclick="goToStep(2)" class="text-xs text-gray-400 mt-4 hover:underline">
+                Изменить выбор
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        /* ================= TELEGRAM USERNAME ================= */
+        // Вставьте сюда ваш username в Telegram БЕЗ знака @
+        const TELEGRAM_USERNAME = 'kamuiwwc';
+
+        /* ================= STATE & CONFIGURATION ================= */
+        let sessions = ["19:00", "20:00", "21:00", "22:00"];
+        
+        let foodOptions = [
+            { id: "pizza", title: "Пицца и Паста 🍕", desc: "Уютный итальянский уголок" },
+            { id: "sushi", title: "Суши и Роллы 🍣", desc: "Свежие сеты и приятная атмосфера" },
+            { id: "burgers", title: "Бургеры & Фастфуд 🍔", desc: "Сочно, вкусно и неформально" },
+            { id: "desserts", title: "Кофейня & Десерты 🍰", desc: "Кофе, какао и вкусные пирожные" }
+        ];
+
+        let walkOptions = [
+            { id: "park", title: "Парк имени 28 гвардейцев-панфиловцев 🌳", desc: "Уютные аллеи и красивые фонари" },
+            { id: "waterfront", title: "Терренкур 🌊", desc: "Свежий воздух и вид на воду" },
+            { id: "center", title: "Центр города ✨", desc: "Огни большого города и кофе навынос" },
+            { id: "quiet", title: "Тихий сквер 🍃", desc: "Тихое место для долгих разговоров" }
+        ];
+
+        let selectedState = {
+            session: sessions[0],
+            food: foodOptions[0].title,
+            walk: walkOptions[0].title
+        };
+
+        let noClickCount = 0;
+
+        /* ================= INITIALIZATION ================= */
+        document.addEventListener("DOMContentLoaded", () => {
+            createHearts();
+            renderSessions();
+            renderFoodOptions();
+            renderWalkOptions();
+        });
+
+        function createHearts() {
+            const container = document.getElementById('heartContainer');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg fa-solid fa-heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+                container.appendChild(heart);
+            }
+        }
+
+        function goToStep(stepNumber) {
+            document.querySelectorAll('.step-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+
+            if (stepNumber === 'no') {
+                document.getElementById('stepNo').classList.add('active');
+            } else {
+                document.getElementById(`step${stepNumber}`).classList.add('active');
+            }
+        }
+
+        /* ================= STEP 1: RUNAWAY "NO" BUTTON ================= */
+        function runawayNo() {
+            const noBtn = document.getElementById('noBtn');
+            const x = (Math.random() - 0.5) * 200;
+            const y = (Math.random() - 0.5) * 120;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function handleNoClick() {
+            noClickCount++;
+            if (noClickCount >= 2) {
+                goToStep('no');
+            } else {
+                runawayNo();
+            }
+        }
+
+        /* ================= STEP 2: MOVIES & SESSIONS ================= */
+        function renderSessions() {
+            const list = document.getElementById('sessionList');
+            list.innerHTML = '';
+
+            sessions.forEach(time => {
+                const isSelected = selectedState.session === time;
+                const card = document.createElement('div');
+                card.className = `option-card p-3 rounded-2xl glass-card flex flex-col items-center justify-center ${isSelected ? 'selected' : ''}`;
+                card.onclick = () => {
+                    selectedState.session = time;
+                    renderSessions();
+                };
+                card.innerHTML = `
+                    <span class="text-xs text-gray-400 font-semibold mb-1">Сеанс</span>
+                    <span class="text-lg font-bold ${isSelected ? 'text-pink-600' : 'text-gray-800'}">${time}</span>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function toggleAddSessionForm() {
+            const form = document.getElementById('addSessionForm');
+            form.classList.toggle('hidden');
+        }
+
+        function addCustomSession() {
+            const input = document.getElementById('customTimeInput');
+            const value = input.value;
+            if (value && !sessions.includes(value)) {
+                sessions.push(value);
+                sessions.sort();
+                selectedState.session = value;
+                renderSessions();
+                input.value = '';
+                toggleAddSessionForm();
+            }
+        }
+
+        function submitStep2() {
+            if (!selectedState.session) {
+                alert('Пожалуйста, выбери время сеанса!');
+                return;
+            }
+            goToStep(3);
+        }
+
+        /* ================= STEP 3: FOOD ================= */
+        function renderFoodOptions() {
+            const list = document.getElementById('foodList');
+            list.innerHTML = '';
+
+            foodOptions.forEach(opt => {
+                const isSelected = selectedState.food === opt.title;
+                const card = document.createElement('div');
+                card.className = `option-card p-3.5 rounded-2xl glass-card text-left ${isSelected ? 'selected' : ''}`;
+                card.onclick = () => {
+                    selectedState.food = opt.title;
+                    renderFoodOptions();
+                };
+                card.innerHTML = `
+                    <h4 class="font-bold text-sm ${isSelected ? 'text-pink-600' : 'text-gray-800'}">${opt.title}</h4>
+                    <p class="text-xs text-gray-500 mt-0.5">${opt.desc}</p>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function submitStep3() {
+            goToStep(4);
+        }
+
+        /* ================= STEP 4: WALK ================= */
+        function renderWalkOptions() {
+            const list = document.getElementById('walkList');
+            list.innerHTML = '';
+
+            walkOptions.forEach(opt => {
+                const isSelected = selectedState.walk === opt.title;
+                const card = document.createElement('div');
+                card.className = `option-card p-3.5 rounded-2xl glass-card text-left ${isSelected ? 'selected' : ''}`;
+                card.onclick = () => {
+                    selectedState.walk = opt.title;
+                    renderWalkOptions();
+                };
+                card.innerHTML = `
+                    <h4 class="font-bold text-sm ${isSelected ? 'text-pink-600' : 'text-gray-800'}">${opt.title}</h4>
+                    <p class="text-xs text-gray-500 mt-0.5">${opt.desc}</p>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function submitStep4() {
+            updateSummary();
+            goToStep(5);
+        }
+
+        /* ================= STEP 5: CALCULATIONS & TELEGRAM ================= */
+        function calculatePickupTime(timeStr) {
+            if (!timeStr) return "18:00";
+            const parts = timeStr.split(':');
+            let hours = parseInt(parts[0], 10) - 1;
+            let minutes = parts[1] || "00";
+
+            if (hours < 0) hours = 23;
+
+            const formattedHours = hours < 10 ? `0${hours}` : `${hours}`;
+            return `${formattedHours}:${minutes}`;
+        }
+
+        function updateSummary() {
+            const pickupTime = calculatePickupTime(selectedState.session);
+            document.getElementById('pickupTimeText').innerText = `Заеду за тобой в ${pickupTime}! 🚗`;
+            document.getElementById('summaryMovie').innerText = `Человек-Паук в ${selectedState.session}`;
+            document.getElementById('summaryFood').innerText = selectedState.food;
+            document.getElementById('summaryWalk').innerText = selectedState.walk;
+        }
+
+        function sendToTelegram() {
+            const pickupTime = calculatePickupTime(selectedState.session);
+
+            // Текст сообщения, который отправит девушка
+            const text = `🎉 Я принимаю приглашение на свидание! 9-го числа ✨\n\n` +
+                         `🎬 Фильм: Человек-Паук в ${selectedState.session}\n` +
+                         `🚗 Жду тебя в: ${pickupTime}\n` +
+                         `🍕 Еда: ${selectedState.food}\n` +
+                         `🌳 Прогулка: ${selectedState.walk}`;
+
+            const encodedText = encodeURIComponent(text);
+            
+            // Открывает диалог в Telegram с готовым текстом
+            window.location.href = `https://t.me/${TELEGRAM_USERNAME}?text=${encodedText}`;
+        }
+    </script>
+</body>
+</html>
